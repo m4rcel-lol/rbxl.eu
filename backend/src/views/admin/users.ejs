@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management — rbxl.eu Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/material.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="m3-body">
+  <%- include('../partials/nav') %>
+  <main class="m3-main">
+    <div class="m3-container">
+      <div class="m3-breadcrumb">
+        <a href="/admin" class="m3-link">Admin</a> / <span>Users</span>
+      </div>
+      <h1 class="m3-headline-medium">User Management</h1>
+
+      <div class="m3-table-container">
+        <table class="m3-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Tag</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(u => { %>
+              <tr class="<%= u.is_banned ? 'm3-row-banned' : '' %>">
+                <td><%= u.id %></td>
+                <td>
+                  <a href="/@<%= u.username %>" class="m3-link">@<%= u.username %></a>
+                  <% if (u.is_admin) { %><span class="badge" style="background:#F44336">Admin</span><% } %>
+                </td>
+                <td>#<%= u.tag %></td>
+                <td><%= u.profile_views || 0 %></td>
+                <td>
+                  <% if (u.is_banned) { %>
+                    <span class="m3-chip m3-chip-error">Banned</span>
+                  <% } else if (u.is_disabled) { %>
+                    <span class="m3-chip m3-chip-warning">Disabled</span>
+                  <% } else { %>
+                    <span class="m3-chip m3-chip-success">Active</span>
+                  <% } %>
+                </td>
+                <td><%= new Date(u.created_at).toLocaleDateString() %></td>
+                <td class="m3-actions">
+                  <% if (!u.is_admin) { %>
+                    <% if (u.is_banned) { %>
+                      <form method="POST" action="/admin/users/<%= u.id %>/unban" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
+                        <button class="m3-btn m3-btn-text">Unban</button>
+                      </form>
+                    <% } else { %>
+                      <form method="POST" action="/admin/users/<%= u.id %>/ban" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
+                        <button class="m3-btn m3-btn-text m3-btn-error">Ban</button>
+                      </form>
+                    <% } %>
+                    <form method="POST" action="/admin/users/<%= u.id %>/toggle-profile" class="m3-inline-form">
+                      <%- include('../partials/csrf') %>
+                      <button class="m3-btn m3-btn-text"><%= u.is_disabled ? 'Enable' : 'Disable' %> Profile</button>
+                    </form>
+                    <form method="POST" action="/admin/users/<%= u.id %>/delete" class="m3-inline-form"
+                      onsubmit="return confirm('Delete user @<%= u.username %>?')">
+                      <%- include('../partials/csrf') %>
+                      <button class="m3-btn m3-btn-text m3-btn-error">Delete</button>
+                    </form>
+                    <details class="m3-details">
+                      <summary class="m3-btn m3-btn-text">Reset Password</summary>
+                      <form method="POST" action="/admin/users/<%= u.id %>/reset-password" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
+                        <input type="password" name="new_password" class="m3-input m3-input-sm" placeholder="New password" minlength="8" required>
+                        <button class="m3-btn m3-btn-tonal m3-btn-sm">Reset</button>
+                      </form>
+                    </details>
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if (totalPages > 1) { %>
+        <div class="m3-pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/admin/users?page=<%= i %>"
+               class="m3-btn <%= i === page ? 'm3-btn-filled' : 'm3-btn-outlined' %> m3-btn-sm"><%= i %></a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </main>
+  <script src="/js/app.js"></script>
+</body>
+</html>

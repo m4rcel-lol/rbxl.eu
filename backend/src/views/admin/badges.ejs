@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badge Management — rbxl.eu Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/material.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="m3-body">
+  <%- include('../partials/nav') %>
+  <main class="m3-main">
+    <div class="m3-container">
+      <div class="m3-breadcrumb">
+        <a href="/admin" class="m3-link">Admin</a> / <span>Badges</span>
+      </div>
+      <h1 class="m3-headline-medium">Badge Management</h1>
+
+      <div class="m3-badges-grid">
+        <% badges.forEach(badge => { %>
+          <div class="m3-card m3-card-elevated m3-badge-manage-card">
+            <div class="m3-card-content">
+              <span class="badge badge-large" style="background: <%= badge.color %>"><%= badge.icon %> <%= badge.label %></span>
+              <p class="m3-body-small"><%= badge.description %></p>
+              <p class="m3-body-small m3-text-muted">ID: <%= badge.name %></p>
+              <form method="POST" action="/admin/badges/<%= badge.id %>/delete" class="m3-inline-form"
+                onsubmit="return confirm('Delete badge <%= badge.label %>?')">
+                <%- include('../partials/csrf') %>
+                <button class="m3-btn m3-btn-text m3-btn-error m3-btn-sm">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <section class="m3-card m3-card-elevated m3-section">
+        <div class="m3-card-content">
+          <h2 class="m3-title-large">Create Badge</h2>
+          <form method="POST" action="/admin/badges" class="m3-form">
+            <%- include('../partials/csrf') %>
+            <div class="m3-form-grid m3-form-grid-3">
+              <div class="m3-field">
+                <label class="m3-label" for="badge_name">Name (ID)</label>
+                <input type="text" id="badge_name" name="name" class="m3-input" required maxlength="50"
+                  pattern="[a-z0-9_]+" title="Lowercase letters, numbers, underscores">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="badge_label">Label</label>
+                <input type="text" id="badge_label" name="label" class="m3-input" required maxlength="50">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="badge_icon">Icon (emoji)</label>
+                <input type="text" id="badge_icon" name="icon" class="m3-input" maxlength="10" placeholder="⭐">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="badge_color">Color</label>
+                <input type="color" id="badge_color" name="color" class="m3-color-input" value="#6750A4">
+              </div>
+              <div class="m3-field m3-field-span-2">
+                <label class="m3-label" for="badge_description">Description</label>
+                <input type="text" id="badge_description" name="description" class="m3-input" maxlength="200">
+              </div>
+            </div>
+            <button type="submit" class="m3-btn m3-btn-filled">Create Badge</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="/js/app.js"></script>
+</body>
+</html>
