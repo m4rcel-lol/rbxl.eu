@@ -25,6 +25,7 @@
         <div class="m3-card-content">
           <h2 class="m3-title-large">Profile Settings</h2>
           <form method="POST" action="/dashboard/profile" class="m3-form">
+            <%- include('partials/csrf') %>
             <div class="m3-form-grid">
               <div class="m3-field">
                 <label class="m3-label" for="display_name">Display Name</label>
@@ -168,6 +169,7 @@
                     <span class="m3-list-secondary"><%= link.url %></span>
                   </div>
                   <form method="POST" action="/dashboard/links/<%= link.id %>/delete" class="m3-inline-form">
+                    <%- include('partials/csrf') %>
                     <button type="submit" class="m3-btn m3-btn-text m3-btn-error">Delete</button>
                   </form>
                 </div>
@@ -179,6 +181,7 @@
 
           <h3 class="m3-title-medium">Add Link</h3>
           <form method="POST" action="/dashboard/links" class="m3-form m3-form-inline">
+            <%- include('partials/csrf') %>
             <div class="m3-form-grid m3-form-grid-3">
               <div class="m3-field">
                 <label class="m3-label" for="link_title">Title</label>
@@ -223,6 +226,7 @@
                     <span class="m3-list-secondary"><%= embed.embed_url %></span>
                   </div>
                   <form method="POST" action="/dashboard/embeds/<%= embed.id %>/delete" class="m3-inline-form">
+                    <%- include('partials/csrf') %>
                     <button type="submit" class="m3-btn m3-btn-text m3-btn-error">Delete</button>
                   </form>
                 </div>
@@ -234,6 +238,7 @@
 
           <h3 class="m3-title-medium">Add Embed</h3>
           <form method="POST" action="/dashboard/embeds" class="m3-form m3-form-inline">
+            <%- include('partials/csrf') %>
             <div class="m3-form-grid m3-form-grid-3">
               <div class="m3-field">
                 <label class="m3-label" for="embed_title">Title (optional)</label>

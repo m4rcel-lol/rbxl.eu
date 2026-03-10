@@ -34,14 +34,23 @@ app.use(helmet({
 }));
 
 // Rate limiting
-const limiter = rateLimit({
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests, please try again later',
+});
+app.use(globalLimiter);
+
+const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   standardHeaders: true,
   legacyHeaders: false,
   message: 'Too many requests, please try again later',
 });
-app.use('/api/', limiter);
+app.use('/api/', apiLimiter);
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -50,6 +59,13 @@ const authLimiter = rateLimit({
 });
 app.use('/login', authLimiter);
 app.use('/register', authLimiter);
+
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: 'Too many requests, please try again later',
+});
+app.use('/admin', adminLimiter);
 
 // Body parsing
 app.use(express.json());
@@ -85,7 +101,10 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 // Load user into all requests
 const { loadUser } = require('./middleware/auth');
+const { csrfToken, csrfProtection } = require('./middleware/csrf');
 app.use(loadUser);
+app.use(csrfToken);
+app.use(csrfProtection);
 
 // Routes
 const authRoutes = require('./routes/auth');

@@ -56,23 +56,28 @@
                   <% if (!u.is_admin) { %>
                     <% if (u.is_banned) { %>
                       <form method="POST" action="/admin/users/<%= u.id %>/unban" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
                         <button class="m3-btn m3-btn-text">Unban</button>
                       </form>
                     <% } else { %>
                       <form method="POST" action="/admin/users/<%= u.id %>/ban" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
                         <button class="m3-btn m3-btn-text m3-btn-error">Ban</button>
                       </form>
                     <% } %>
                     <form method="POST" action="/admin/users/<%= u.id %>/toggle-profile" class="m3-inline-form">
+                      <%- include('../partials/csrf') %>
                       <button class="m3-btn m3-btn-text"><%= u.is_disabled ? 'Enable' : 'Disable' %> Profile</button>
                     </form>
                     <form method="POST" action="/admin/users/<%= u.id %>/delete" class="m3-inline-form"
                       onsubmit="return confirm('Delete user @<%= u.username %>?')">
+                      <%- include('../partials/csrf') %>
                       <button class="m3-btn m3-btn-text m3-btn-error">Delete</button>
                     </form>
                     <details class="m3-details">
                       <summary class="m3-btn m3-btn-text">Reset Password</summary>
                       <form method="POST" action="/admin/users/<%= u.id %>/reset-password" class="m3-inline-form">
+                        <%- include('../partials/csrf') %>
                         <input type="password" name="new_password" class="m3-input m3-input-sm" placeholder="New password" minlength="8" required>
                         <button class="m3-btn m3-btn-tonal m3-btn-sm">Reset</button>
                       </form>

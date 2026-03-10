@@ -24,6 +24,7 @@
           <% } %>
 
           <form method="POST" action="/login" class="m3-form">
+            <%- include('partials/csrf') %>
             <div class="m3-field">
               <label class="m3-label" for="username">Username</label>
               <input type="text" id="username" name="username" class="m3-input" required autocomplete="username">

@@ -28,6 +28,7 @@
               <p class="m3-body-small m3-text-muted">ID: <%= badge.name %></p>
               <form method="POST" action="/admin/badges/<%= badge.id %>/delete" class="m3-inline-form"
                 onsubmit="return confirm('Delete badge <%= badge.label %>?')">
+                <%- include('../partials/csrf') %>
                 <button class="m3-btn m3-btn-text m3-btn-error m3-btn-sm">Delete</button>
               </form>
             </div>
@@ -39,6 +40,7 @@
         <div class="m3-card-content">
           <h2 class="m3-title-large">Create Badge</h2>
           <form method="POST" action="/admin/badges" class="m3-form">
+            <%- include('../partials/csrf') %>
             <div class="m3-form-grid m3-form-grid-3">
               <div class="m3-field">
                 <label class="m3-label" for="badge_name">Name (ID)</label>
