@@ -22,15 +22,10 @@
     "better-sqlite3": "^12.6.2",
     "connect-sqlite3": "^0.9.16",
     "cookie-parser": "^1.4.7",
-    "csurf": "^1.11.0",
-    "dompurify": "^3.3.2",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.1",
     "express-session": "^1.19.0",
-    "helmet": "^8.1.0",
-    "jsdom": "^28.1.0",
-    "multer": "^2.1.1",
-    "uuid": "^13.0.0"
+    "helmet": "^8.1.0"
   }
 }
