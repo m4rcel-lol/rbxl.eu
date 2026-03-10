@@ -109,6 +109,9 @@ a {
   top: 0;
   z-index: 100;
   box-shadow: var(--md-sys-elevation-1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(37, 35, 42, 0.9);
 }
 
 .m3-nav-inner {
@@ -467,6 +470,37 @@ a {
 
 .m3-main {
   min-height: calc(100vh - 56px);
+}
+
+/* ========== Success Alert ========== */
+.m3-alert-success {
+  background: rgba(46, 125, 50, 0.15);
+  color: #66BB6A;
+}
+
+/* ========== Footer ========== */
+.m3-footer {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.8125rem;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  margin-top: auto;
+}
+
+.m3-footer a {
+  color: var(--md-sys-color-primary);
+}
+
+.m3-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Divider ========== */
+.m3-divider {
+  border: none;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  margin: 1.5rem 0;
 }
 
 /* ========== Responsive ========== */
