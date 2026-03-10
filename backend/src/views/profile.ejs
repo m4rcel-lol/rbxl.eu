@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> — rbxl.eu</title>
+  <meta name="description" content="<%= profile.bio || profileUser.username + ' on rbxl.eu' %>">
+  <meta property="og:title" content="@<%= profileUser.username %>#<%= profileUser.tag %>">
+  <meta property="og:description" content="<%= profile.bio || 'Check out my profile on rbxl.eu' %>">
+  <% if (profile.avatar) { %><meta property="og:image" content="<%= profile.avatar %>"><% } %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=<%= encodeURIComponent(profile.font_family || 'Roboto') %>:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/material.css">
+  <link rel="stylesheet" href="/css/profile.css">
+  <style>
+    :root {
+      --md-sys-color-primary: <%= profile.theme_color || '#6750A4' %>;
+      --md-sys-color-accent: <%= profile.accent_color || '#D0BCFF' %>;
+      --profile-gradient-start: <%= profile.gradient_start || '#1C1B1F' %>;
+      --profile-gradient-end: <%= profile.gradient_end || '#2B2930' %>;
+      --profile-font: '<%= profile.font_family || 'Roboto' %>', sans-serif;
+    }
+    body { font-family: var(--profile-font); }
+    <% if (profile.background_type === 'image' && profile.background) { %>
+    .profile-bg { background-image: url('<%= profile.background %>'); background-size: cover; background-position: center; }
+    <% } else if (profile.background_type === 'gradient') { %>
+    .profile-bg { background: linear-gradient(135deg, var(--profile-gradient-start), var(--profile-gradient-end)); }
+    <% } else { %>
+    .profile-bg { background: var(--profile-gradient-start); }
+    <% } %>
+  </style>
+</head>
+<body class="profile-body">
+  <!-- Click-to-Enter Overlay -->
+  <div id="entry-overlay" class="entry-overlay<%= profile.entry_animation ? '' : ' no-animation' %>">
+    <div class="entry-content">
+      <% if (profile.banner) { %>
+        <div class="entry-banner" style="background-image: url('<%= profile.banner %>')"></div>
+      <% } %>
+      <div class="entry-avatar-wrap">
+        <% if (profile.avatar) { %>
+          <img src="<%= profile.avatar %>" alt="<%= profileUser.username %>" class="entry-avatar<%= profile.animations_enabled ? ' animated-border' : '' %>" loading="lazy">
+        <% } else { %>
+          <div class="entry-avatar entry-avatar-placeholder"><%= profileUser.username.charAt(0).toUpperCase() %></div>
+        <% } %>
+      </div>
+      <h1 class="entry-username">@<%= profileUser.username %><span class="entry-tag">#<%= profileUser.tag %></span></h1>
+      <% if (badges.length > 0) { %>
+        <div class="entry-badges">
+          <% badges.forEach(badge => { %>
+            <span class="badge" style="background: <%= badge.color %>" title="<%= badge.label %>"><%= badge.icon %></span>
+          <% }) %>
+        </div>
+      <% } %>
+      <button id="enter-btn" class="m3-btn m3-btn-filled m3-btn-large entry-btn">Click to Enter</button>
+    </div>
+  </div>
+
+  <!-- Profile Content (hidden until enter) -->
+  <div id="profile-main" class="profile-main profile-bg hidden" data-animations="<%= profile.animations_enabled ? '1' : '0' %>">
+    <% if (profile.banner) { %>
+      <div class="profile-banner" style="background-image: url('<%= profile.banner %>')"></div>
+    <% } %>
+
+    <div class="profile-container layout-<%= profile.layout || 'centered' %>">
+      <div class="profile-header">
+        <div class="profile-avatar-wrap">
+          <% if (profile.avatar) { %>
+            <img src="<%= profile.avatar %>" alt="<%= profileUser.username %>" class="profile-avatar<%= profile.animations_enabled ? ' animated-border' : '' %>" loading="lazy">
+          <% } else { %>
+            <div class="profile-avatar profile-avatar-placeholder"><%= profileUser.username.charAt(0).toUpperCase() %></div>
+          <% } %>
+        </div>
+        <h1 class="profile-username">
+          <%= profile.display_name || profileUser.username %>
+          <span class="profile-tag">@<%= profileUser.username %>#<%= profileUser.tag %></span>
+        </h1>
+        <% if (badges.length > 0) { %>
+          <div class="profile-badges">
+            <% badges.forEach(badge => { %>
+              <span class="badge" style="background: <%= badge.color %>" title="<%= badge.label %>"><%= badge.icon %> <%= badge.label %></span>
+            <% }) %>
+          </div>
+        <% } %>
+        <% if (profile.bio) { %>
+          <p class="profile-bio"><%= profile.bio %></p>
+        <% } %>
+      </div>
+
+      <!-- Links Section -->
+      <% if (links.length > 0) { %>
+        <div class="profile-links">
+          <% links.forEach(link => { %>
+            <a href="<%= link.url %>" target="_blank" rel="noopener noreferrer"
+               class="m3-card m3-card-<%= profile.card_style || 'elevated' %> profile-link<%= profile.hover_effects ? ' hover-effect' : '' %>">
+              <span class="link-icon"><%= getLinkIcon(link.link_type) %></span>
+              <span class="link-title"><%= link.title %></span>
+              <span class="link-arrow">→</span>
+            </a>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Embeds Section -->
+      <% if (embeds.length > 0) { %>
+        <div class="profile-embeds">
+          <% embeds.forEach(embed => { %>
+            <div class="m3-card m3-card-elevated profile-embed">
+              <% if (embed.title) { %><h3 class="embed-title"><%= embed.title %></h3><% } %>
+              <div class="embed-container">
+                <% if (embed.embed_type === 'youtube') { %>
+                  <iframe src="<%= getYoutubeEmbed(embed.embed_url) %>" frameborder="0" allowfullscreen loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <% } else if (embed.embed_type === 'spotify') { %>
+                  <iframe src="<%= getSpotifyEmbed(embed.embed_url) %>" frameborder="0" allowtransparency="true"
+                    allow="encrypted-media" loading="lazy"></iframe>
+                <% } else if (embed.embed_type === 'soundcloud') { %>
+                  <iframe src="https://w.soundcloud.com/player/?url=<%= encodeURIComponent(embed.embed_url) %>&color=%23<%= (profile.theme_color || '#6750A4').replace('#','') %>&auto_play=false"
+                    frameborder="0" loading="lazy"></iframe>
+                <% } else if (embed.embed_type === 'twitch') { %>
+                  <iframe src="https://player.twitch.tv/?channel=<%= getTwitchChannel(embed.embed_url) %>&parent=<%= typeof req !== 'undefined' ? req.hostname : 'localhost' %>"
+                    frameborder="0" allowfullscreen loading="lazy"></iframe>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div class="profile-footer">
+        <span class="profile-views"><%= profile.profile_views %> views</span>
+        <a href="/" class="m3-link">rbxl.eu</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/profile.js"></script>
+</body>
+</html>
+
+<%
+function getLinkIcon(type) {
+  const icons = {
+    website: '🌐', discord: '💬', twitter: '🐦', github: '💻',
+    youtube: '▶️', twitch: '🎮', spotify: '🎵', soundcloud: '🎶', custom: '🔗'
+  };
+  return icons[type] || '🔗';
+}
+
+function getYoutubeEmbed(url) {
+  try {
+    const u = new URL(url);
+    let id = '';
+    if (u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+    else id = u.searchParams.get('v') || u.pathname.split('/').pop();
+    return 'https://www.youtube-nocookie.com/embed/' + id;
+  } catch { return ''; }
+}
+
+function getSpotifyEmbed(url) {
+  try {
+    const u = new URL(url);
+    return 'https://open.spotify.com/embed' + u.pathname;
+  } catch { return ''; }
+}
+
+function getTwitchChannel(url) {
+  try {
+    const u = new URL(url);
+    return u.pathname.replace(/^\//, '').split('/')[0];
+  } catch { return ''; }
+}
+%>

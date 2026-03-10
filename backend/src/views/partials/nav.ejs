@@ -1,0 +1,17 @@
+<nav class="m3-nav">
+  <div class="m3-nav-inner">
+    <a href="/" class="m3-nav-brand">rbxl.eu</a>
+    <div class="m3-nav-links">
+      <% if (user) { %>
+        <a href="/dashboard" class="m3-btn m3-btn-text">Dashboard</a>
+        <% if (user.is_admin) { %>
+          <a href="/admin" class="m3-btn m3-btn-text">Admin</a>
+        <% } %>
+        <a href="/logout" class="m3-btn m3-btn-tonal">Logout</a>
+      <% } else { %>
+        <a href="/login" class="m3-btn m3-btn-text">Login</a>
+        <a href="/register" class="m3-btn m3-btn-filled">Sign Up</a>
+      <% } %>
+    </div>
+  </div>
+</nav>

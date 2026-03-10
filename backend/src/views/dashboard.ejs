@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> — rbxl.eu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/material.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="m3-body">
+  <%- include('partials/nav') %>
+  <main class="m3-main">
+    <div class="m3-container m3-dashboard">
+      <div class="m3-dashboard-header">
+        <h1 class="m3-headline-medium">Dashboard</h1>
+        <p class="m3-body-medium">Welcome, @<%= user.username %>#<%= user.tag %></p>
+        <a href="/@<%= user.username %>" class="m3-btn m3-btn-tonal" target="_blank">View Profile ↗</a>
+      </div>
+
+      <!-- Profile Settings -->
+      <section class="m3-card m3-card-elevated m3-section">
+        <div class="m3-card-content">
+          <h2 class="m3-title-large">Profile Settings</h2>
+          <form method="POST" action="/dashboard/profile" class="m3-form">
+            <div class="m3-form-grid">
+              <div class="m3-field">
+                <label class="m3-label" for="display_name">Display Name</label>
+                <input type="text" id="display_name" name="display_name" class="m3-input"
+                  value="<%= profile.display_name || '' %>" maxlength="50">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="bio">Bio</label>
+                <textarea id="bio" name="bio" class="m3-input m3-textarea" maxlength="500" rows="3"><%= profile.bio || '' %></textarea>
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="avatar">Avatar URL</label>
+                <input type="url" id="avatar" name="avatar" class="m3-input"
+                  value="<%= profile.avatar || '' %>" placeholder="https://...">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="banner">Banner URL</label>
+                <input type="url" id="banner" name="banner" class="m3-input"
+                  value="<%= profile.banner || '' %>" placeholder="https://...">
+              </div>
+            </div>
+
+            <h3 class="m3-title-medium">Theme</h3>
+            <div class="m3-form-grid m3-form-grid-3">
+              <div class="m3-field">
+                <label class="m3-label" for="theme_color">Theme Color</label>
+                <input type="color" id="theme_color" name="theme_color" class="m3-color-input"
+                  value="<%= profile.theme_color || '#6750A4' %>">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="accent_color">Accent Color</label>
+                <input type="color" id="accent_color" name="accent_color" class="m3-color-input"
+                  value="<%= profile.accent_color || '#D0BCFF' %>">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="background_type">Background Type</label>
+                <select id="background_type" name="background_type" class="m3-select">
+                  <option value="solid" <%= profile.background_type === 'solid' ? 'selected' : '' %>>Solid</option>
+                  <option value="gradient" <%= profile.background_type === 'gradient' ? 'selected' : '' %>>Gradient</option>
+                  <option value="image" <%= profile.background_type === 'image' ? 'selected' : '' %>>Image</option>
+                </select>
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="gradient_start">Gradient Start</label>
+                <input type="color" id="gradient_start" name="gradient_start" class="m3-color-input"
+                  value="<%= profile.gradient_start || '#1C1B1F' %>">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="gradient_end">Gradient End</label>
+                <input type="color" id="gradient_end" name="gradient_end" class="m3-color-input"
+                  value="<%= profile.gradient_end || '#2B2930' %>">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="background">Background Image URL</label>
+                <input type="url" id="background" name="background" class="m3-input"
+                  value="<%= profile.background || '' %>" placeholder="https://...">
+              </div>
+            </div>
+
+            <h3 class="m3-title-medium">Layout & Style</h3>
+            <div class="m3-form-grid m3-form-grid-3">
+              <div class="m3-field">
+                <label class="m3-label" for="layout">Layout</label>
+                <select id="layout" name="layout" class="m3-select">
+                  <option value="centered" <%= profile.layout === 'centered' ? 'selected' : '' %>>Centered</option>
+                  <option value="left" <%= profile.layout === 'left' ? 'selected' : '' %>>Left Aligned</option>
+                  <option value="grid" <%= profile.layout === 'grid' ? 'selected' : '' %>>Grid</option>
+                </select>
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="card_style">Card Style</label>
+                <select id="card_style" name="card_style" class="m3-select">
+                  <option value="elevated" <%= profile.card_style === 'elevated' ? 'selected' : '' %>>Elevated</option>
+                  <option value="filled" <%= profile.card_style === 'filled' ? 'selected' : '' %>>Filled</option>
+                  <option value="outlined" <%= profile.card_style === 'outlined' ? 'selected' : '' %>>Outlined</option>
+                </select>
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="font_family">Font</label>
+                <input type="text" id="font_family" name="font_family" class="m3-input"
+                  value="<%= profile.font_family || 'Roboto' %>" maxlength="50">
+              </div>
+            </div>
+
+            <h3 class="m3-title-medium">Animations</h3>
+            <div class="m3-form-grid m3-form-grid-2">
+              <div class="m3-field m3-field-check">
+                <label class="m3-switch">
+                  <input type="checkbox" name="animations_enabled" <%= profile.animations_enabled ? 'checked' : '' %>>
+                  <span class="m3-switch-slider"></span>
+                  Enable Animations
+                </label>
+              </div>
+              <div class="m3-field m3-field-check">
+                <label class="m3-switch">
+                  <input type="checkbox" name="hover_effects" <%= profile.hover_effects ? 'checked' : '' %>>
+                  <span class="m3-switch-slider"></span>
+                  Enable Hover Effects
+                </label>
+              </div>
+              <div class="m3-field m3-field-check">
+                <label class="m3-switch">
+                  <input type="checkbox" name="animated_background" <%= profile.animated_background ? 'checked' : '' %>>
+                  <span class="m3-switch-slider"></span>
+                  Enable Animated Background
+                </label>
+              </div>
+              <div class="m3-field m3-field-check">
+                <label class="m3-switch">
+                  <input type="checkbox" name="entry_animation" <%= profile.entry_animation ? 'checked' : '' %>>
+                  <span class="m3-switch-slider"></span>
+                  Enable Entry Animation
+                </label>
+              </div>
+            </div>
+
+            <h3 class="m3-title-medium">Music</h3>
+            <div class="m3-field">
+              <label class="m3-label" for="music_url">Music URL (Spotify/SoundCloud/YouTube)</label>
+              <input type="url" id="music_url" name="music_url" class="m3-input"
+                value="<%= profile.music_url || '' %>" placeholder="https://...">
+            </div>
+
+            <button type="submit" class="m3-btn m3-btn-filled">Save Profile</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Links -->
+      <section class="m3-card m3-card-elevated m3-section">
+        <div class="m3-card-content">
+          <h2 class="m3-title-large">Links</h2>
+
+          <% if (links.length > 0) { %>
+            <div class="m3-list">
+              <% links.forEach(link => { %>
+                <div class="m3-list-item">
+                  <span class="m3-list-icon"><%= getLinkIcon(link.link_type) %></span>
+                  <div class="m3-list-text">
+                    <span class="m3-list-primary"><%= link.title %></span>
+                    <span class="m3-list-secondary"><%= link.url %></span>
+                  </div>
+                  <form method="POST" action="/dashboard/links/<%= link.id %>/delete" class="m3-inline-form">
+                    <button type="submit" class="m3-btn m3-btn-text m3-btn-error">Delete</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <p class="m3-body-medium m3-text-muted">No links yet. Add your first link below.</p>
+          <% } %>
+
+          <h3 class="m3-title-medium">Add Link</h3>
+          <form method="POST" action="/dashboard/links" class="m3-form m3-form-inline">
+            <div class="m3-form-grid m3-form-grid-3">
+              <div class="m3-field">
+                <label class="m3-label" for="link_title">Title</label>
+                <input type="text" id="link_title" name="title" class="m3-input" required maxlength="100">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="link_url">URL</label>
+                <input type="url" id="link_url" name="url" class="m3-input" required placeholder="https://...">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="link_type">Type</label>
+                <select id="link_type" name="link_type" class="m3-select">
+                  <option value="custom">Custom</option>
+                  <option value="website">Website</option>
+                  <option value="discord">Discord</option>
+                  <option value="twitter">Twitter/X</option>
+                  <option value="github">GitHub</option>
+                  <option value="youtube">YouTube</option>
+                  <option value="twitch">Twitch</option>
+                  <option value="spotify">Spotify</option>
+                  <option value="soundcloud">SoundCloud</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="m3-btn m3-btn-tonal">Add Link</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Embeds -->
+      <section class="m3-card m3-card-elevated m3-section">
+        <div class="m3-card-content">
+          <h2 class="m3-title-large">Media Embeds</h2>
+
+          <% if (embeds.length > 0) { %>
+            <div class="m3-list">
+              <% embeds.forEach(embed => { %>
+                <div class="m3-list-item">
+                  <span class="m3-list-icon"><%= embed.embed_type === 'youtube' ? '▶️' : embed.embed_type === 'spotify' ? '🎵' : '🎶' %></span>
+                  <div class="m3-list-text">
+                    <span class="m3-list-primary"><%= embed.title || embed.embed_type %></span>
+                    <span class="m3-list-secondary"><%= embed.embed_url %></span>
+                  </div>
+                  <form method="POST" action="/dashboard/embeds/<%= embed.id %>/delete" class="m3-inline-form">
+                    <button type="submit" class="m3-btn m3-btn-text m3-btn-error">Delete</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <p class="m3-body-medium m3-text-muted">No embeds yet.</p>
+          <% } %>
+
+          <h3 class="m3-title-medium">Add Embed</h3>
+          <form method="POST" action="/dashboard/embeds" class="m3-form m3-form-inline">
+            <div class="m3-form-grid m3-form-grid-3">
+              <div class="m3-field">
+                <label class="m3-label" for="embed_title">Title (optional)</label>
+                <input type="text" id="embed_title" name="title" class="m3-input" maxlength="100">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="embed_url">URL</label>
+                <input type="url" id="embed_url" name="embed_url" class="m3-input" required placeholder="https://...">
+              </div>
+              <div class="m3-field">
+                <label class="m3-label" for="embed_type">Type</label>
+                <select id="embed_type" name="embed_type" class="m3-select">
+                  <option value="youtube">YouTube</option>
+                  <option value="spotify">Spotify</option>
+                  <option value="soundcloud">SoundCloud</option>
+                  <option value="twitch">Twitch</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="m3-btn m3-btn-tonal">Add Embed</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Badges -->
+      <% if (badges.length > 0) { %>
+        <section class="m3-card m3-card-elevated m3-section">
+          <div class="m3-card-content">
+            <h2 class="m3-title-large">Your Badges</h2>
+            <div class="m3-badges-grid">
+              <% badges.forEach(badge => { %>
+                <div class="m3-badge-card">
+                  <span class="badge" style="background: <%= badge.color %>"><%= badge.icon %> <%= badge.label %></span>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </section>
+      <% } %>
+    </div>
+  </main>
+  <script src="/js/app.js"></script>
+</body>
+</html>
+
+<%
+function getLinkIcon(type) {
+  const icons = {
+    website: '🌐', discord: '💬', twitter: '🐦', github: '💻',
+    youtube: '▶️', twitch: '🎮', spotify: '🎵', soundcloud: '🎶', custom: '🔗'
+  };
+  return icons[type] || '🔗';
+}
+%>

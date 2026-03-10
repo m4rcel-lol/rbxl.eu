@@ -1,0 +1,35 @@
+# Caddyfile for rbxl.eu
+#
+# For production, replace :80 with your domain name (e.g. rbxl.eu)
+# Caddy will automatically handle HTTPS certificates via Let's Encrypt.
+#
+# Example production config:
+#   rbxl.eu {
+#       reverse_proxy app:3000
+#   }
+
+:80 {
+    reverse_proxy app:3000
+
+    # Security headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    # Static asset caching
+    @static {
+        path *.css *.js *.png *.jpg *.jpeg *.gif *.svg *.ico *.woff *.woff2
+    }
+    header @static Cache-Control "public, max-age=604800, immutable"
+
+    # Compression
+    encode gzip zstd
+
+    log {
+        output stdout
+        format json
+    }
+}

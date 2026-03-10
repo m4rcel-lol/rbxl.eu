@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — rbxl.eu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/material.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="m3-body">
+  <%- include('../partials/nav') %>
+  <main class="m3-main">
+    <div class="m3-container">
+      <h1 class="m3-headline-medium">Admin Panel</h1>
+      <p class="m3-body-medium">Platform administration dashboard</p>
+
+      <div class="m3-stats-grid">
+        <div class="m3-card m3-card-filled m3-stat-card">
+          <div class="m3-card-content">
+            <span class="m3-stat-number"><%= stats.totalUsers %></span>
+            <span class="m3-stat-label">Total Users</span>
+          </div>
+        </div>
+        <div class="m3-card m3-card-filled m3-stat-card">
+          <div class="m3-card-content">
+            <span class="m3-stat-number"><%= stats.totalProfiles %></span>
+            <span class="m3-stat-label">Total Profiles</span>
+          </div>
+        </div>
+        <div class="m3-card m3-card-filled m3-stat-card">
+          <div class="m3-card-content">
+            <span class="m3-stat-number"><%= stats.activeProfiles %></span>
+            <span class="m3-stat-label">Active Profiles</span>
+          </div>
+        </div>
+        <div class="m3-card m3-card-filled m3-stat-card">
+          <div class="m3-card-content">
+            <span class="m3-stat-number"><%= stats.bannedUsers %></span>
+            <span class="m3-stat-label">Banned Users</span>
+          </div>
+        </div>
+        <div class="m3-card m3-card-filled m3-stat-card">
+          <div class="m3-card-content">
+            <span class="m3-stat-number"><%= stats.totalViews %></span>
+            <span class="m3-stat-label">Total Profile Views</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="m3-admin-nav">
+        <a href="/admin/users" class="m3-btn m3-btn-tonal">👥 User Management</a>
+        <a href="/admin/badges" class="m3-btn m3-btn-tonal">🏷️ Badge Management</a>
+      </div>
+    </div>
+  </main>
+  <script src="/js/app.js"></script>
+</body>
+</html>

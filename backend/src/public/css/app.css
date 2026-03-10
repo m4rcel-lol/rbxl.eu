@@ -1,0 +1,170 @@
+/*
+ * App-specific styles for rbxl.eu
+ * Built on Material You design tokens
+ */
+
+/* ========== Hero Section ========== */
+.m3-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 4rem 1.5rem;
+  background: linear-gradient(135deg, var(--md-sys-color-surface), var(--md-sys-color-surface-3));
+}
+
+.m3-hero-content {
+  text-align: center;
+  max-width: 640px;
+}
+
+.m3-hero-content h1 {
+  background: linear-gradient(135deg, var(--md-sys-color-primary), #D0BCFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.m3-hero-content p {
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 0.5rem;
+}
+
+.m3-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ========== Features Grid ========== */
+.m3-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 3rem 0;
+}
+
+.m3-feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ========== Auth Pages ========== */
+.m3-auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px);
+  padding: 2rem;
+}
+
+.m3-auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+.m3-auth-card h1 {
+  margin-bottom: 0.25rem;
+}
+
+.m3-auth-card > .m3-card-content > p {
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 1.5rem;
+}
+
+/* ========== Dashboard ========== */
+.m3-dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.m3-dashboard-header h1 {
+  margin-right: auto;
+}
+
+.m3-dashboard-header p {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.m3-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.m3-badge-manage-card {
+  min-width: 200px;
+}
+
+/* ========== Admin Stats ========== */
+.m3-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.m3-stat-card .m3-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.m3-stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+}
+
+.m3-stat-label {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.m3-admin-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ========== Error Page ========== */
+.m3-error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px);
+  padding: 2rem;
+}
+
+.m3-error-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+/* ========== Animations ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.m3-card {
+  animation: fadeIn var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-emphasized);
+}
+
+/* Ripple effect */
+.m3-btn:active {
+  transform: scale(0.97);
+}
