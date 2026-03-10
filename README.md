@@ -2,7 +2,37 @@
 
 A lightweight, production-ready personal bio/profile hosting platform styled with **Material You (Material Design 3)**. Create beautiful custom profile pages with links, media embeds, badges, and animations.
 
-![Home Page](https://github.com/user-attachments/assets/34915dab-ace8-4795-b9f7-011ba48125b0)
+## Screenshots
+
+### Home Page
+![Home Page](./screenshots/home.png)
+
+### Login
+![Login](./screenshots/login.png)
+
+### Register
+![Register](./screenshots/register.png)
+
+### Profile — Click-to-Enter Overlay
+![Profile Entry](./screenshots/profile-entry.png)
+
+### Profile Page
+![Profile](./screenshots/profile.png)
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Admin Panel
+![Admin Panel](./screenshots/admin.png)
+
+### Admin — User Management
+![Admin Users](./screenshots/admin-users.png)
+
+### Admin — Badge Management
+![Admin Badges](./screenshots/admin-badges.png)
+
+### Error Page (404)
+![Error Page](./screenshots/error.png)
 
 ## Features
 
@@ -39,11 +69,16 @@ A lightweight, production-ready personal bio/profile hosting platform styled wit
 cd backend
 npm install
 npm run migrate
-npm run seed        # Creates admin user + default badges
+npm run seed        # Creates admin user, test user + default badges
 npm run dev         # Starts with --watch on port 3000
 ```
 
-Visit `http://localhost:3000`. Default admin: `admin` / `admin123`
+Visit `http://localhost:3000`. Default accounts:
+
+| Username | Password | Role |
+|----------|----------|------|
+| `admin` | `admin123` | Admin |
+| `testuser` | `testuser123` | User (demo profile with links & badges) |
 
 ### Docker Deployment
 
@@ -114,6 +149,7 @@ rbxl.eu/
 │   │       ├── css/              # Material You + app styles
 │   │       └── js/               # Client-side scripts
 │   └── package.json
+├── screenshots/                   # Page screenshots for documentation
 ├── caddy/
 │   └── Caddyfile                 # Caddy reverse proxy config
 ├── Dockerfile                    # Alpine-based production image
